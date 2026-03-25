@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Chainika Dhaila</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#0f0b08;--bg2:#1a1410;--bg3:#221c16;--surface:#2c2318;
+  --border:#3d2e22;--border2:#4a3828;
+  --white:#f0ebe3;--white2:#c8bfb4;--muted:#7a6d62;
+  --accent:#c8410a;--accent2:#e8632e;
+  --sans:"DM Sans",sans-serif;--serif:"Instrument Serif",serif;--display:"Bebas Neue",sans-serif;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--white);overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;justify-content:space-between;align-items:center;padding:18px 48px;background:rgba(15,11,8,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--display);font-size:20px;letter-spacing:0.12em;color:var(--white);text-decoration:none}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--accent2)}
+.nav-links .nav-active{border:1px solid var(--accent);padding:6px 14px;color:var(--accent2)}
+.nav-burger{display:none;background:none;border:none;color:var(--white);font-size:22px;cursor:pointer}
+
+/* ── HERO BANNER ── */
+.port-hero{min-height:60vh;display:flex;flex-direction:column;justify-content:flex-end;padding:120px 48px 80px;background:var(--bg);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.port-hero::before{content:"PORTFOLIO";font-family:var(--display);font-size:28vw;line-height:1;color:rgba(255,255,255,0.025);position:absolute;bottom:-40px;left:-20px;pointer-events:none;letter-spacing:-0.02em}
+.port-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:var(--accent2);margin-bottom:20px}
+.port-headline{font-family:var(--display);font-size:clamp(52px,7vw,100px);line-height:0.9;letter-spacing:0.02em;color:var(--white);margin-bottom:24px}
+.port-headline span{color:var(--accent)}
+.port-sub{font-family:var(--serif);font-size:clamp(16px,1.8vw,20px);line-height:1.6;color:var(--white2);max-width:560px}
+
+/* ── FILTER BAR ── */
+.filter-bar{padding:28px 48px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;align-items:center;position:sticky;top:62px;z-index:90}
+.filter-label{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-right:8px}
+.filter-btn{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:8px 18px;border:1px solid var(--border2);color:var(--muted);background:transparent;cursor:pointer;transition:all 0.2s}
+.filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent2);background:rgba(200,65,10,0.08)}
+
+/* ── GALLERY ── */
+.gallery{padding:60px 48px 100px;display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+
+/* ── CARD ── */
+.card{position:relative;overflow:hidden;cursor:pointer;background:var(--bg2);border:1px solid var(--border);aspect-ratio:4/3;transition:transform 0.3s}
+.card:hover{transform:scale(1.01);z-index:2}
+.card.wide{grid-column:span 2}
+.card.tall{grid-row:span 2;aspect-ratio:auto}
+
+/* Card image */
+.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),filter 0.5s ease;filter:brightness(0.5) saturate(0.75) sepia(0.35)}
+.card:hover .card-img{transform:scale(1.05);filter:brightness(0.3) saturate(0.6) sepia(0.45)}
+
+/* Card fallback shapes (shown when no image) */
+.card-shape{position:absolute;inset:0;pointer-events:none}
+
+/* Card overlay gradient */
+.card-body{position:absolute;inset:0;padding:32px 28px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(to top,rgba(10,6,3,0.95) 0%,rgba(10,6,3,0.3) 55%,transparent 100%);transition:background 0.3s}
+.card:hover .card-body{background:linear-gradient(to top,rgba(10,6,3,0.98) 0%,rgba(10,6,3,0.6) 65%,rgba(10,6,3,0.15) 100%)}
+
+.card-tag{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+.card-title{font-family:var(--display);font-size:clamp(20px,2.3vw,30px);line-height:1;letter-spacing:0.02em;color:var(--white);margin-bottom:10px}
+.card-desc{font-size:13px;line-height:1.6;color:var(--white2);max-height:0;overflow:hidden;transition:max-height 0.4s ease,opacity 0.4s ease;opacity:0}
+.card:hover .card-desc{max-height:80px;opacity:1}
+.card-metric{display:inline-block;margin-top:12px;font-family:var(--display);font-size:26px;line-height:1;color:var(--accent2)}
+.card-metric span{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);display:block;margin-top:2px}
+
+/* Card colour fallback tints */
+.card.c-rust   {background:linear-gradient(135deg,#1a0d08 0%,#3d1408 100%)}
+.card.c-esp    {background:linear-gradient(135deg,#1a1410 0%,#2c1a0e 100%)}
+.card.c-char   {background:linear-gradient(135deg,#141010 0%,#221810 100%)}
+.card.c-brown  {background:linear-gradient(135deg,#180f08 0%,#2e1c0e 100%)}
+.card.c-dark   {background:var(--bg3)}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(8,5,3,0.92);z-index:9999;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:48px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);max-width:760px;width:100%;max-height:90vh;overflow-y:auto;padding:56px;position:relative;animation:mIn 0.3s cubic-bezier(0.16,1,0.3,1)}
+@keyframes mIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:24px;right:24px;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;transition:color 0.2s}
+.modal-close:hover{color:var(--white)}
+.modal-img{width:100%;height:220px;object-fit:cover;object-position:center;margin-bottom:32px;filter:brightness(0.8) sepia(0.2);display:block}
+.modal-img-placeholder{width:100%;height:220px;background:var(--bg3);border:1px solid var(--border);margin-bottom:32px;display:flex;align-items:center;justify-content:center}
+.modal-img-placeholder span{font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)}
+.modal-tag{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent2);margin-bottom:16px}
+.modal-title{font-family:var(--display);font-size:clamp(36px,4vw,54px);line-height:0.95;letter-spacing:0.02em;color:var(--white);margin-bottom:28px}
+.modal-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:32px}
+.modal-metric{background:var(--bg3);border:1px solid var(--border);padding:20px 16px}
+.modal-metric-num{font-family:var(--display);font-size:32px;line-height:1;color:var(--accent2);margin-bottom:4px}
+.modal-metric-lbl{font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted)}
+.modal-section{margin-bottom:28px}
+.modal-section-label{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.modal-text{font-size:15px;line-height:1.75;color:var(--white2)}
+.modal-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.modal-badge{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border2);color:var(--muted)}
+
+/* Hidden cards */
+.card.hidden{display:none}
+
+/* ── FOOTER ── */
+.port-footer{background:var(--bg);border-top:2px solid var(--accent);padding:60px 48px;display:flex;justify-content:space-between;align-items:center}
+.pf-left{font-family:var(--display);font-size:32px;letter-spacing:0.06em;color:var(--white)}
+.pf-left span{color:var(--accent)}
+.pf-links{display:flex;gap:12px}
+.pf-link{font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:14px 24px;text-decoration:none;border:1px solid var(--border2);color:var(--white2);transition:all 0.2s}
+.pf-link:hover,.pf-link.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:16px 24px}
+  .nav-links{display:none;flex-direction:column;position:fixed;top:62px;left:0;right:0;background:var(--bg);padding:24px;gap:20px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .nav-burger{display:block}
+  .port-hero{padding:100px 24px 60px}
+  .filter-bar{padding:20px 24px}
+  .gallery{grid-template-columns:1fr;padding:32px 24px 60px;gap:2px}
+  .card.wide,.card.tall{grid-column:span 1;grid-row:span 1;aspect-ratio:4/3}
+  .modal-overlay{padding:16px}
+  .modal{padding:32px 24px}
+  .modal-metrics{grid-template-columns:1fr 1fr}
+  .port-footer{flex-direction:column;gap:24px;padding:48px 24px;text-align:center}
+  .pf-links{flex-direction:column;width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">Chainika Dhaila</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#reelo">Reelo</a></li>
+    <li><a href="index.html#kylas">Kylas</a></li>
+    <li><a href="index.html#philosophy">Thinking</a></li>
+    <li><a href="index.html#channels">Craft</a></li>
+    <li><a href="portfolio.html" class="nav-active">Portfolio</a></li>
+    <li><a href="index.html#contact">Connect</a></li>
+  </ul>
+  <button class="nav-burger" id="navBurger">&#9776;</button>
+</nav>
+
+<!-- HERO -->
+<div class="port-hero">
+  <p class="port-eyebrow">Selected Work &middot; 2022&ndash;2025</p>
+  <h1 class="port-headline">The Work<span>.</span></h1>
+  <p class="port-sub">Campaigns, launches, and systems built to drive revenue &mdash; not just impressions. Every piece here has a number attached to it. Click any card for the full case study.</p>
+</div>
+
+<!-- FILTER -->
+<div class="filter-bar">
+  <span class="filter-label">Filter by</span>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="reelo">Reelo</button>
+  <button class="filter-btn" data-filter="kylas">Kylas</button>
+  <button class="filter-btn" data-filter="campaign">Campaign</button>
+  <button class="filter-btn" data-filter="gtm">GTM</button>
+  <button class="filter-btn" data-filter="content">Content</button>
+  <button class="filter-btn" data-filter="seo">SEO</button>
+</div>
+
+<!-- GALLERY -->
+<!-- ⚠️ IMAGE INSTRUCTIONS:
+     1. Create an "images/" folder in your GitHub repo
+     2. Upload your images with these exact filenames:
+        grow-without-discounting.jpg
+        membership-launch.jpg
+        abm-city-mixer.jpg
+        use-case-videos.jpg
+        seo-dashboard.jpg
+        kylas-ads.jpg
+        loyalty-workshop.jpg
+     3. The <img> tags below will automatically show them
+-->
+<div class="gallery" id="gallery">
+
+  <!-- 1: GROW WITHOUT DISCOUNTING — wide -->
+  <div class="card wide c-rust reveal"
+    data-filter="reelo campaign"
+    data-title="Grow Without Discounting"
+    data-tag="Reelo &middot; Flagship Campaign &middot; 2023"
+    data-img="images/grow-without-discounting.jpg"
+    data-problem="India's restaurant industry was hooked on discounts — Zomato Gold, Swiggy deals, happy hours. Restaurants were training their best customers to only visit when it was cheap, destroying margin in the process."
+    data-approach="We launched a full-year narrative campaign built around one uncomfortable truth: discounting your loyal customers is the fastest way to lose them. Ran across content, email, WhatsApp, events, and paid. Every piece reinforced the same positioning statement."
+    data-result="Ran the full year. Shaped Reelo's positioning statement. Strong industry validation and press coverage. Became the lens through which restaurant owners started evaluating their own loyalty strategy."
+    data-metrics='[{"n":"Full Year","l":"Campaign duration"},{"n":"#1","l":"Narrative in category"},{"n":"↑ SQLs","l":"Pipeline impact"}]'
+    data-tags="Brand Narrative,Full-funnel,Positioning,Content,Paid Media">
+    <img class="card-img" src="images/grow-without-discounting.jpg" alt="Grow Without Discounting" onerror="this.style.display='none'">
+    <svg class="card-shape" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <circle cx="400" cy="225" r="160" fill="none" stroke="#c8410a" stroke-width="60" opacity="0.06"/>
+      <text x="60" y="320" font-family="Bebas Neue,sans-serif" font-size="200" fill="#c8410a" opacity="0.05">GROW</text>
+    </svg>
+    <div class="card-body">
+      <div class="card-tag">Reelo &middot; Flagship Campaign &middot; 2023</div>
+      <div class="card-title">Grow Without Discounting</div>
+      <div class="card-desc">Full-year narrative campaign that repositioned loyalty away from discounts. Shaped Reelo's market position.</div>
+      <div class="card-metric">Full Year<span>Campaign Duration</span></div>
+    </div>
+  </div>
+
+  <!-- 2: MEMBERSHIP LAUNCH -->
+  <div class="card c-esp reveal"
+    data-filter="reelo gtm"
+    data-title="Membership Launch GTM"
+    data-tag="Reelo &middot; Product Launch &middot; 2024"
+    data-img="images/membership-launch.jpg"
+    data-problem="Reelo launched a Memberships add-on letting restaurants run paid loyalty programs. The challenge: educating a market that had never paid for loyalty when free punch cards existed."
+    data-approach="Built end-to-end GTM: PR outreach, a music video, an education content series explaining ROI of paid memberships vs free programs, landing pages, and paid acquisition. Sequenced the launch to hit existing customers first, then prospects."
+    data-result="300+ restaurants now running memberships. Opened a new revenue stream for Reelo and a new conversation for sales teams around recurring customer revenue."
+    data-metrics='[{"n":"300+","l":"Restaurants on memberships"},{"n":"New","l":"Revenue stream opened"},{"n":"↑ ACV","l":"Account expansion"}]'
+    data-tags="GTM,Product Launch,PR,Paid,Content,Email">
+    <img class="card-img" src="images/membership-launch.jpg" alt="Membership Launch" onerror="this.style.display='none'">
+    <svg class="card-shape" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <rect x="60" y="60" width="280" height="180" fill="none" stroke="#c8410a" stroke-width="1" opacity="0.08"/>
+      <circle cx="200" cy="150" r="50" fill="#c8410a" opacity="0.06"/>
+    </svg>
+    <div class="card-body">
+      <div class="card-tag">Reelo &middot; Product GTM &middot; 2024</div>
+      <div class="card-title">Membership Launch</div>
+      <div class="card-desc">End-to-end GTM. PR, music video, content, paid channels.</div>
+      <div class="card-metric">300+<span>Restaurants Activated</span></div>
+    </div>
+  </div>
+
+  <!-- 3: ABM CITY MIXERS -->
+  <div class="card c-char reveal"
+    data-filter="reelo campaign"
+    data-title="Enterprise ABM & City Mixers"
+    data-tag="Reelo &middot; ABM &middot; Events"
+    data-img="images/abm-city-mixer.jpg"
+    data-problem="Enterprise restaurant groups weren't in Reelo's pipeline. They weren't engaging with digital ads. They needed a completely different approach."
+    data-approach="Built a targeted ABM program hitting 300–400 top restaurant groups across key cities. Anchor tactic: city mixer events — invite-only evenings with Reelo as host. Layered personalised outreach and operator-specific content around each event."
+    data-result="100+ enterprise SQLs per year. Several significant enterprise accounts closed through the city mixer pipeline. Established Reelo's presence in a segment it had previously not penetrated."
+    data-metrics='[{"n":"300+","l":"Accounts targeted"},{"n":"100+","l":"Enterprise SQLs/yr"},{"n":"City","l":"Mixers run"}]'
+    data-tags="ABM,Events,Enterprise,Outreach,Personalisation">
+    <img class="card-img" src="images/abm-city-mixer.jpg" alt="ABM City Mixers" onerror="this.style.display='none'">
+    <svg class="card-shape" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <circle cx="120" cy="150" r="80" fill="none" stroke="#c8410a" stroke-width="1" opacity="0.08"/>
+      <circle cx="280" cy="150" r="80" fill="none" stroke="#c8410a" stroke-width="1" opacity="0.08"/>
+      <circle cx="200" cy="150" r="30" fill="#c8410a" opacity="0.07"/>
+    </svg>
+    <div class="card-body">
+      <div class="card-tag">Reelo &middot; ABM &middot; Events</div>
+      <div class="card-title">Enterprise ABM &amp; City Mixers</div>
+      <div class="card-desc">City mixer events + targeted outreach to 300+ enterprise restaurant groups.</div>
+      <div class="card-metric">100+<span>Enterprise SQLs / Year</span></div>
+    </div>
+  </div>
+
+  <!-- 4: USE CASE VIDEOS -->
+  <div class="card c-brown reveal"
+    data-filter="reelo content"
+    data-title="AI-Powered Use Case Videos"
+    data-tag="Reelo &middot; Content &middot; Sales Enablement"
+    data-img="images/use-case-videos.jpg"
+    data-problem="Reelo's sales team needed mid-funnel content that spoke to restaurant owners in their language — not product demos, not feature lists. Operators needed to see themselves in the content."
+    data-approach="Used AI to produce high-volume, scenario-based use-case videos. Each video built around a specific restaurant situation: 'what happens when a customer hasn't visited in 45 days', 'how a chain owner tracks loyalty across locations'. Fast production, high specificity."
+    data-result="Became a major deal-influence asset. Sales team used videos in follow-up sequences. Measurable lift in demo-to-close engagement when videos were deployed in the funnel."
+    data-metrics='[{"n":"AI","l":"Powered production"},{"n":"↑ Close","l":"Demo engagement"},{"n":"Multi","l":"Use case formats"}]'
+    data-tags="AI Content,Video,Sales Enablement,Mid-funnel">
+    <img class="card-img" src="images/use-case-videos.jpg" alt="Use Case Videos" onerror="this.style.display='none'">
+    <svg class="card-shape" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <polygon points="160,80 320,150 160,220" fill="#c8410a" opacity="0.07"/>
+      <rect x="40" y="60" width="4" height="180" fill="#c8410a" opacity="0.08"/>
+    </svg>
+    <div class="card-body">
+      <div class="card-tag">Reelo &middot; Content &middot; 2024</div>
+      <div class="card-title">AI Use Case Videos</div>
+      <div class="card-desc">Scenario-based videos for restaurant operators. Built with AI for speed and specificity.</div>
+      <div class="card-metric">↑ SQL<span>Deal Attribution</span></div>
+    </div>
+  </div>
+
+  <!-- 5: SEO — wide -->
+  <div class="card wide c-dark reveal"
+    data-filter="kylas seo"
+    data-title="SEO & Organic Growth — Kylas"
+    data-tag="Kylas &middot; SEO &middot; Demand Gen &middot; 2022–2023"
+    data-img="images/seo-dashboard.jpg"
+    data-problem="Kylas had zero domain authority and zero organic presence when I joined. Every lead was paid. The CAC was unsustainable for an SMB-focused CRM."
+    data-approach="Built the entire SEO function from scratch. Keyword strategy, content calendar, technical SEO fixes, link building, vertical landing pages for EdTech, Fintech, Insurance, and Coaching verticals. Wrote and published consistently. Built partnerships that earned backlinks."
+    data-result="Domain Rating 0 to 40. Authority Score 0 to 33. Organic traffic became 60% of total traffic flow and 40% of total lead flow. Ranking for all core sales and CRM keywords in India."
+    data-metrics='[{"n":"DR 40","l":"From 0"},{"n":"60%","l":"Organic traffic share"},{"n":"40%","l":"Organic lead share"}]'
+    data-tags="SEO,Organic,Content Strategy,Link Building,Landing Pages">
+    <img class="card-img" src="images/seo-dashboard.jpg" alt="SEO Dashboard" onerror="this.style.display='none'">
+    <svg class="card-shape" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <polyline points="0,280 100,240 200,200 300,150 400,100 500,70 600,50 700,40 800,35" fill="none" stroke="#c8410a" stroke-width="2" opacity="0.1"/>
+      <text x="60" y="230" font-family="Bebas Neue,sans-serif" font-size="160" fill="#c8410a" opacity="0.04">SEO</text>
+    </svg>
+    <div class="card-body">
+      <div class="card-tag">Kylas &middot; SEO &middot; 2022&ndash;2023</div>
+      <div class="card-title">SEO &amp; Organic Growth</div>
+      <div class="card-desc">Domain Rating 0 &rarr; 40. Organic became 60% of traffic and 40% of all leads.</div>
+      <div class="card-metric">DR 40<span>From Zero</span></div>
+    </div>
+  </div>
+
+  <!-- 6: KYLAS ADS -->
+  <div class="card c-rust reveal"
+    data-filter="kylas campaign content"
+    data-title="Kylas Ad Creative System"
+    data-tag="Kylas &middot; Paid Media &middot; Creative"
+    data-img="images/kylas-ads.jpg"
+    data-problem="Kylas needed a consistent, high-volume ad creative system across Google and Meta. The brand was new, the category was crowded, and most competitors looked identical."
+    data-approach="Built a multi-campaign creative system: 'Play on Unlimited Users' brand campaign, carousel ads showing product value, generic CRM awareness ads, and retargeting creative. Developed distinct visual language. Tied every creative decision to conversion intent."
+    data-result="65% increase in MQLs/SQLs. 5% decrease in CAC. Campaigns ran consistently across Google Search, Google Display, and Meta Feed/Stories."
+    data-metrics='[{"n":"65%","l":"MQL/SQL increase"},{"n":"5%","l":"CAC decrease"},{"n":"3","l":"Campaign systems"}]'
+    data-tags="Paid Media,Ad Creative,Google Ads,Meta Ads,Brand">
+    <img class="card-img" src="images/kylas-ads.jpg" alt="Kylas Ad Creatives" onerror="this.style.display='none'">
+    <svg class="card-shape" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <rect x="40" y="40" width="140" height="100" fill="#c8410a" opacity="0.08" rx="4"/>
+      <rect x="220" y="40" width="140" height="100" fill="none" stroke="#c8410a" stroke-width="1" opacity="0.1" rx="4"/>
+      <rect x="40" y="180" width="140" height="80" fill="none" stroke="#c8410a" stroke-width="1" opacity="0.1" rx="4"/>
+      <rect x="220" y="180" width="140" height="80" fill="#c8410a" opacity="0.05" rx="4"/>
+    </svg>
+    <div class="card-body">
+      <div class="card-tag">Kylas &middot; Paid Media</div>
+      <div class="card-title">Ad Creative System</div>
+      <div class="card-desc">"Unlimited Users" campaign + carousels + CRM ads across Google and Meta.</div>
+      <div class="card-metric">65%<span>MQL / SQL Increase</span></div>
+    </div>
+  </div>
+
+  <!-- 7: LOYALTY WORKSHOPS -->
+  <div class="card c-esp reveal"
+    data-filter="reelo content campaign"
+    data-title="Loyalty Workshops"
+    data-tag="Reelo &middot; Events &middot; Thought Leadership"
+    data-img="images/loyalty-workshop.jpg"
+    data-problem="Restaurant operators were skeptical of loyalty platforms. Reelo needed to be seen as an authority on loyalty strategy, not just another software vendor."
+    data-approach="Ran in-person workshops for restaurant operators on why loyalty programs fail and how to build them properly. Topics: defining a loyalty segment, avoiding discount dependency, measuring true loyalty ROI. Positioned Reelo experts as facilitators, not salespeople."
+    data-result="Two workshops run. Strong industry response. Direct pipeline generated from workshop attendees who converted to Reelo trials."
+    data-metrics='[{"n":"2","l":"Workshops run"},{"n":"↑","l":"Industry authority"},{"n":"Direct","l":"Pipeline generated"}]'
+    data-tags="Events,Thought Leadership,Community,Brand,Restaurant Industry">
+    <img class="card-img" src="images/loyalty-workshop.jpg" alt="Loyalty Workshops" onerror="this.style.display='none'">
+    <svg class="card-shape" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <circle cx="200" cy="150" r="100" fill="none" stroke="#c8410a" stroke-width="1" opacity="0.08"/>
+      <circle cx="200" cy="150" r="60" fill="none" stroke="#c8410a" stroke-width="1" opacity="0.06"/>
+      <circle cx="200" cy="150" r="20" fill="#c8410a" opacity="0.07"/>
+    </svg>
+    <div class="card-body">
+      <div class="card-tag">Reelo &middot; Events &middot; 2024</div>
+      <div class="card-title">Loyalty Workshops</div>
+      <div class="card-desc">In-person operator workshops on loyalty strategy. Authority play, not a sales pitch.</div>
+      <div class="card-metric">2<span>Workshops &middot; Direct Pipeline</span></div>
+    </div>
+  </div>
+
+</div><!-- /gallery -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose">&#10005;</button>
+    <div id="mImgWrap"></div>
+    <div class="modal-tag" id="mTag"></div>
+    <h2 class="modal-title" id="mTitle"></h2>
+    <div class="modal-metrics" id="mMetrics"></div>
+    <div class="modal-section">
+      <div class="modal-section-label">The Problem</div>
+      <p class="modal-text" id="mProblem"></p>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">The Approach</div>
+      <p class="modal-text" id="mApproach"></p>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">The Result</div>
+      <p class="modal-text" id="mResult"></p>
+    </div>
+    <div class="modal-tags" id="mTags"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="port-footer">
+  <div class="pf-left">Chainika<span>.</span></div>
+  <div class="pf-links">
+    <a href="index.html" class="pf-link">&#8592; Back to Home</a>
+    <a href="https://linkedin.com/in/YOUR-PROFILE" class="pf-link primary" target="_blank">Connect on LinkedIn &rarr;</a>
+  </div>
+</div>
+
+<script>
+// REVEAL
+(function(){
+  var io=new IntersectionObserver(function(e){
+    e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('visible');});
+  },{threshold:0.06});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+
+// FILTER
+document.querySelectorAll('.filter-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    var f=btn.getAttribute('data-filter');
+    document.querySelectorAll('.card').forEach(function(c){
+      if(f==='all'){c.classList.remove('hidden');}
+      else{
+        var cf=c.getAttribute('data-filter')||'';
+        c.classList.toggle('hidden', cf.indexOf(f)===-1);
+      }
+    });
+  });
+});
+
+// MODAL
+var overlay=document.getElementById('modalOverlay');
+
+document.querySelectorAll('.card').forEach(function(card){
+  card.addEventListener('click',function(){
+    document.getElementById('mTag').innerHTML=card.getAttribute('data-tag')||'';
+    document.getElementById('mTitle').innerHTML=card.getAttribute('data-title')||'';
+    document.getElementById('mProblem').innerHTML=card.getAttribute('data-problem')||'';
+    document.getElementById('mApproach').innerHTML=card.getAttribute('data-approach')||'';
+    document.getElementById('mResult').innerHTML=card.getAttribute('data-result')||'';
+
+    // modal image
+    var imgSrc=card.getAttribute('data-img')||'';
+    var imgWrap=document.getElementById('mImgWrap');
+    if(imgSrc){
+      imgWrap.innerHTML='<img class="modal-img" src="'+imgSrc+'" alt="" onerror="this.parentElement.innerHTML=\'<div class=modal-img-placeholder><span>Image coming soon</span></div>\'">';
+    } else {
+      imgWrap.innerHTML='<div class="modal-img-placeholder"><span>Image coming soon</span></div>';
+    }
+
+    // metrics
+    var mEl=document.getElementById('mMetrics');
+    mEl.innerHTML='';
+    try{
+      JSON.parse(card.getAttribute('data-metrics')||'[]').forEach(function(m){
+        mEl.innerHTML+='<div class="modal-metric"><div class="modal-metric-num">'+m.n+'</div><div class="modal-metric-lbl">'+m.l+'</div></div>';
+      });
+    }catch(e){}
+
+    // tags
+    var tEl=document.getElementById('mTags');
+    tEl.innerHTML='';
+    (card.getAttribute('data-tags')||'').split(',').forEach(function(t){
+      if(t.trim())tEl.innerHTML+='<span class="modal-badge">'+t.trim()+'</span>';
+    });
+
+    overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+});
+
+document.getElementById('modalClose').addEventListener('click',closeModal);
+overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+function closeModal(){overlay.classList.remove('open');document.body.style.overflow='';}
+
+// BURGER
+document.getElementById('navBurger').addEventListener('click',function(){
+  document.querySelector('.nav-links').classList.toggle('open');
+});
+</script>
+</body>
+</html>
