@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if(window.innerWidth>820&&!location.search.includes("m=1"))location.replace("./"+location.hash);</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;background:#fafafa;color:#131316;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+a{color:#131316;text-decoration:underline;text-underline-offset:4px}
+a:hover{color:#2f7fd6}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+</style>
+</helmet>
+
+<div style="max-width:480px;margin:0 auto;min-height:100vh;position:relative;overflow-x:clip;padding-bottom:110px;">
+
+  <header data-screen-label="01 Home" style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(250,250,250,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);">
+    <div style="font:800 17px 'Bricolage Grotesque';letter-spacing:-.02em;">Chainika</div>
+    <div style="font-size:12.5px;color:#6b6b73;font-weight:500;">Pune · {{ istTime }}</div>
+  </header>
+
+  <section style="padding:16px 20px 28px;display:flex;flex-direction:column;gap:18px;">
+    <div style="position:relative;width:84px;height:84px;border-radius:24px;box-shadow:0 8px 24px rgba(0,0,0,.08);">
+      <div style="position:absolute;inset:0;border-radius:24px;overflow:hidden;background:repeating-linear-gradient(135deg,#efeff2 0 8px,#f7f7f9 8px 16px);"><div style="position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-image:url(images/portrait.jpg),url(images/portrait.png),url(images/portrait.webp);"></div></div>
+    </div>
+    <h1 style="margin:0;font:800 40px/1.04 'Bricolage Grotesque';letter-spacing:-.035em;">I'm Chainika.<br>I lead {{ roleSlot }}<br>at <a href="https://www.reelo.io" target="_blank" style="color:#131316;text-decoration-thickness:3px;text-decoration-color:#c9c9cf;">Reelo</a> &amp; <a href="#" style="color:#131316;text-decoration-thickness:3px;text-decoration-color:#c9c9cf;">Olly.</a></h1>
+    <p style="margin:0;font-size:16px;line-height:1.6;color:#55555c;text-wrap:pretty;">Head of Brand &amp; Marketing across B2B SaaS and F&amp;B tech. I build marketing that actually sells — turning positioning into pipeline and loyalty into a growth engine.</p>
+  </section>
+
+  <sc-if value="{{ showWidgets }}" hint-placeholder-val="{{ true }}">
+    <section style="padding:0 20px 32px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="aspect-ratio:1;background:#fff;border-radius:22px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);position:relative;">
+          <div style="position:absolute;top:64%;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.14em;color:#8a8a92;font-weight:600;">PUNE</div>
+          <sc-for list="{{ ticks }}" as="t" hint-placeholder-count="12">
+            <div style="position:absolute;left:50%;top:50%;width:2px;height:{{ t.h }};background:#b5b5bb;transform:{{ t.tf }};"></div>
+          </sc-for>
+          <div style="position:absolute;left:50%;bottom:50%;width:4px;height:26%;margin-left:-2px;background:#131316;border-radius:2px;transform-origin:50% 100%;transform:{{ hourRot }};"></div>
+          <div style="position:absolute;left:50%;bottom:50%;width:3px;height:36%;margin-left:-1.5px;background:#131316;border-radius:2px;transform-origin:50% 100%;transform:{{ minRot }};"></div>
+          <div style="position:absolute;left:50%;bottom:50%;width:1px;height:38%;margin-left:-.5px;background:#e5484d;transform-origin:50% 100%;transform:{{ secRot }};"></div>
+          <div style="position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#131316;"></div>
+        </div>
+        <div style="aspect-ratio:1;background:#fff;border-radius:22px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);padding:14px 12px 10px;">
+          <div style="font-size:10px;font-weight:700;color:#e5484d;letter-spacing:.06em;">{{ weekday }}</div>
+          <div style="font:700 22px/1.1 'Bricolage Grotesque';margin-bottom:6px;">{{ dayNum }}</div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px 0;font-size:8px;text-align:center;color:#6b6b73;">
+            <sc-for list="{{ dow }}" as="d" hint-placeholder-count="7"><div style="color:#a3a3aa;">{{ d }}</div></sc-for>
+            <sc-for list="{{ cal }}" as="c" hint-placeholder-count="30">
+              <div style="height:13px;display:flex;align-items:center;justify-content:center;"><span style="width:13px;height:13px;line-height:13px;border-radius:50%;background:{{ c.bg }};color:{{ c.fg }};font-weight:{{ c.fw }};">{{ c.n }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:22px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);padding:16px;display:flex;gap:14px;align-items:center;">
+        <div style="width:56px;height:56px;flex:none;border-radius:12px;background:oklch(0.68 0.17 35);display:flex;align-items:center;justify-content:center;color:#fff;font:800 12px 'Bricolage Grotesque';letter-spacing:.04em;">GTM</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:10px;letter-spacing:.12em;color:#8a8a92;font-weight:600;">NOW BUILDING</div>
+          <div style="font-weight:600;font-size:15px;margin-top:2px;">Olly GTM</div>
+          <div style="font-size:12px;color:#6b6b73;">Positioning · launch sequencing · channels</div>
+          <div style="height:4px;background:#ececef;border-radius:2px;margin-top:10px;overflow:hidden;"><div style="width:62%;height:100%;background:#131316;border-radius:2px;"></div></div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:22px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);padding:16px 18px;">
+        <div style="font-size:12px;color:#6b6b73;margin-bottom:12px;">Pipeline · per year</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;">
+          <div><div style="font:700 16px 'Bricolage Grotesque';">1,500+</div><div style="font-size:10px;color:#8a8a92;margin-top:2px;">SMB SQLs</div></div>
+          <div><div style="font:700 16px 'Bricolage Grotesque';">50%</div><div style="font-size:10px;color:#8a8a92;margin-top:2px;">Lead → Demo</div></div>
+          <div><div style="font:700 16px 'Bricolage Grotesque';">30%</div><div style="font-size:10px;color:#8a8a92;margin-top:2px;">Demo → Close</div></div>
+          <div><div style="font:700 16px 'Bricolage Grotesque';">300+</div><div style="font-size:10px;color:#8a8a92;margin-top:2px;">ABM targets</div></div>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <section id="m-folders" data-screen-label="02 Proof of work" style="padding:0 20px 36px;">
+    <h2 style="margin:0 0 16px;font:700 26px 'Bricolage Grotesque';letter-spacing:-.02em;">Proof of work</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px 6px;">
+      <sc-for list="{{ folders }}" as="f" hint-placeholder-count="6">
+        <button onClick="{{ f.open }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:14px;" style-active="background:rgba(0,0,0,.05);">
+          <div style="position:relative;width:64px;height:50px;">
+            <div style="position:absolute;left:0;top:0;width:28px;height:14px;border-radius:6px 8px 0 0;background:#56b3ee;"></div>
+            <div style="position:absolute;left:0;top:7px;right:0;bottom:0;border-radius:6px 6px 8px 8px;background:linear-gradient(#93d5fc,#5fc1f6);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 2px 4px rgba(40,120,190,.18);"></div>
+          </div>
+          <div style="font-size:13px;font-weight:500;text-align:center;line-height:1.25;">{{ f.name }}</div>
+          <div style="font-size:11px;color:#8a8a92;margin-top:-4px;">{{ f.countLabel }}</div>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="m-achievements" data-screen-label="03 Achievements" style="padding:0 0 36px;">
+    <h2 style="margin:0 20px 16px;font:700 26px 'Bricolage Grotesque';letter-spacing:-.02em;">Achievements</h2>
+    <div style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 20px 8px;scroll-padding:0 20px;scrollbar-width:none;">
+      <sc-for list="{{ achievements }}" as="a" hint-placeholder-count="4">
+        <div style="flex:none;width:78%;scroll-snap-align:start;background:#fff;border:1px solid #ececef;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <span style="font:800 30px/1 'Bricolage Grotesque';letter-spacing:-.02em;">{{ a.metric }}</span>
+            <span style="font-size:10.5px;font-weight:600;letter-spacing:.08em;color:#6b6b73;background:#f3f3f5;border-radius:999px;padding:4px 9px;">{{ a.org }}</span>
+          </div>
+          <div style="font-weight:600;font-size:15px;line-height:1.3;">{{ a.title }}</div>
+          <div style="font-size:14px;color:#6b6b73;line-height:1.5;text-wrap:pretty;">{{ a.desc }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="m-super" data-screen-label="04 Superpowers" style="position:relative;padding:0 0 36px;background:#f4f4f6;">
+    <sc-for list="{{ spList }}" as="sp" hint-placeholder-count="3">
+      <div style="position:sticky;top:{{ sp.top }};min-height:{{ sp.minH }};display:flex;flex-direction:column;">
+        <div style="display:flex;"><div style="background:#e6e7ea;height:44px;padding:0 44px 0 24px;border-radius:18px 36px 0 0;display:flex;align-items:center;font-weight:600;font-size:12.5px;letter-spacing:.14em;color:#3a3a40;">{{ sp.label }}</div></div>
+        <div style="flex:1;background:#e6e7ea;border-radius:0 22px 0 0;padding-top:14px;display:flex;flex-direction:column;box-shadow:0 -6px 16px rgba(0,0,0,.04);">
+          <div style="flex:1;background:linear-gradient(#f7f8fa,#eceef1);border-radius:22px 22px 0 0;padding:24px 20px 28px;display:flex;flex-direction:column;gap:16px;">
+            <div style="font-size:11px;letter-spacing:.2em;color:#8a8a92;font-weight:600;">{{ sp.kicker }}</div>
+            <h3 style="margin:-6px 0 0;font:700 26px/1.15 'Bricolage Grotesque';letter-spacing:-.02em;text-wrap:balance;">{{ sp.title }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.6;color:#44444a;">{{ sp.body }}</p>
+            <div style="background:#f8f8fa;border-radius:6px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);">
+              <div style="height:20px;background:linear-gradient(#f1d15a,#e2bc3c);"></div>
+              <div style="padding:18px;display:flex;flex-direction:column;gap:14px;">
+                <sc-for list="{{ sp.points }}" as="pt" hint-placeholder-count="3">
+                  <div><div style="font-weight:600;font-size:15px;">{{ pt.t }}</div><div style="font-size:13.5px;color:#55555c;margin-top:3px;">{{ pt.d }}</div></div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <sc-for list="{{ sp.btnList }}" as="b" hint-placeholder-count="2">
+                <button onClick="{{ b.open }}" style="all:unset;cursor:pointer;background:#4a9ff0;color:#fff;font-weight:600;font-size:14px;height:44px;line-height:44px;padding:0 18px;border-radius:999px;" style-active="background:#3a8ee0;">{{ b.label }} →</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+
+  <section style="padding:0 20px 36px;">
+    <div style="background:#fff;border-radius:22px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);padding:18px;">
+      <div style="font-size:12px;color:#6b6b73;margin-bottom:12px;">Where I operate</div>
+      <div style="display:flex;flex-direction:column;gap:9px;">
+        <sc-for list="{{ skills }}" as="s" hint-placeholder-count="7">
+          <div style="display:grid;grid-template-columns:120px 1fr 24px;align-items:center;gap:10px;font-size:12.5px;">
+            <span style="color:#3a3a40;">{{ s.name }}</span>
+            <div style="height:5px;background:#efeff2;border-radius:3px;overflow:hidden;"><div style="height:100%;width:{{ s.w }};background:#131316;border-radius:3px;"></div></div>
+            <span style="color:#8a8a92;text-align:right;">{{ s.v }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="05 Partners" style="background:#f1f1f4;padding:36px 0 40px;overflow:hidden;">
+    <h2 style="margin:0 20px 18px;font:700 26px 'Bricolage Grotesque';letter-spacing:-.02em;">Partners &amp; recognition</h2>
+    <div style="display:flex;gap:12px;width:max-content;animation:marquee 45s linear infinite;">
+      <sc-for list="{{ marquee }}" as="m" hint-placeholder-count="6">
+        <div style="width:200px;flex:none;background:#fff;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font:700 12px 'Bricolage Grotesque';letter-spacing:.1em;color:#55555c;">{{ m.src }}</div>
+          <div style="font-weight:600;font-size:14.5px;line-height:1.35;min-height:38px;">{{ m.text }}</div>
+          <div style="font-size:12px;color:#8a8a92;">{{ m.meta }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="m-contact" data-screen-label="06 Contact" style="padding:56px 20px 24px;text-align:center;">
+    <h2 style="margin:0;font:800 44px/1 'Bricolage Grotesque';letter-spacing:-.035em;">Let's talk.</h2>
+    <p style="margin:16px auto 0;font-size:15.5px;line-height:1.6;color:#55555c;text-wrap:pretty;">Building something in F&amp;B tech, B2B SaaS or consumer growth, and need marketing that drives revenue — not just awareness? I'd like to hear about it.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:24px;">
+      <a href="https://www.linkedin.com/in/chainika-dhaila/" target="_blank" style="background:#131316;color:#fff;text-decoration:none;font-weight:600;font-size:15px;height:50px;line-height:50px;border-radius:999px;">Connect on LinkedIn →</a>
+      <a href="mailto:chainikadhaila4@gmail.com" style="background:#fff;color:#131316;text-decoration:none;border:1px solid #e2e2e6;font-weight:600;font-size:15px;height:50px;line-height:48px;border-radius:999px;">Email me</a>
+    </div>
+    <div style="margin-top:36px;background:#fff;border:1px solid #ececef;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;align-items:center;font-size:14px;color:#3a3a40;line-height:1.45;">
+      <span>I made this website with Claude — and I can do the same for you.</span>
+      <a href="mailto:chainikadhaila4@gmail.com?subject=Build%20me%20a%20website" style="background:#131316;color:#fff;text-decoration:none;font-weight:600;font-size:13.5px;height:44px;line-height:44px;padding:0 18px;border-radius:999px;">Let's build yours →</a>
+    </div>
+    <div style="margin-top:24px;font-size:12px;color:#a3a3aa;">© 2026 Chainika Dhaila</div>
+  </section>
+
+  <nav style="position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:40;background:rgba(255,255,255,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:24px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 30px rgba(0,0,0,.12);padding:8px;display:flex;align-items:center;gap:10px;">
+    <button onClick="{{ goTop }}" title="Home" style="all:unset;cursor:pointer;width:48px;height:48px;border-radius:13px;background:#fff;border:1px solid #e6e6ea;display:flex;align-items:center;justify-content:center;font:800 18px 'Bricolage Grotesque';">C</button>
+    <button onClick="{{ goFolders }}" title="Proof of work" style="all:unset;cursor:pointer;width:48px;height:48px;border-radius:13px;background:linear-gradient(#6cb8ff,#3a8ef0);display:flex;align-items:center;justify-content:center;"><div style="position:relative;width:20px;height:16px;"><div style="position:absolute;left:0;top:0;width:9px;height:6px;border-radius:2px 3px 0 0;background:#fff;"></div><div style="position:absolute;left:0;top:2px;right:0;bottom:0;border-radius:2px;background:#fff;"></div></div></button>
+    <button onClick="{{ goSuper }}" title="Superpowers" style="all:unset;cursor:pointer;width:48px;height:48px;border-radius:13px;background:linear-gradient(#b27cff,#8a4df0);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;">✦</button>
+    <button onClick="{{ goAchievements }}" title="Achievements" style="all:unset;cursor:pointer;width:48px;height:48px;border-radius:13px;background:linear-gradient(#ff7a8a,#ef3f57);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;">♥</button>
+    <button onClick="{{ goContact }}" title="Contact" style="all:unset;cursor:pointer;width:48px;height:48px;border-radius:13px;background:linear-gradient(#5ee07a,#29b64a);color:#fff;display:flex;align-items:center;justify-content:center;font:700 17px 'Bricolage Grotesque';">@</button>
+  </nav>
+
+  <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:60;background:rgba(20,20,24,.3);">
+      <div style="position:absolute;inset:12px 0 0;max-width:480px;margin:0 auto;background:#fff;border-radius:20px 20px 0 0;display:flex;flex-direction:column;overflow:hidden;animation:sheetUp .28s cubic-bezier(.2,.8,.2,1);">
+        <div style="flex:none;padding:8px 0 0;display:flex;justify-content:center;"><div style="width:36px;height:5px;border-radius:3px;background:#dcdce0;"></div></div>
+        <div style="flex:none;height:52px;display:flex;align-items:center;gap:6px;padding:0 8px 0 8px;">
+          <sc-if value="{{ hasProof }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ back }}" style="all:unset;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:26px;color:#2f7fd6;">‹</button>
+          </sc-if>
+          <div style="flex:1;min-width:0;padding-left:10px;font-weight:700;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ crumb }}</div>
+          <button onClick="{{ close }}" style="all:unset;cursor:pointer;height:44px;padding:0 12px;font-weight:600;font-size:15px;color:#2f7fd6;">Done</button>
+        </div>
+        <sc-if value="{{ showGrid }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:none;display:flex;gap:8px;overflow-x:auto;padding:4px 16px 12px;scrollbar-width:none;">
+            <sc-for list="{{ navChips }}" as="c" hint-placeholder-count="6">
+              <button onClick="{{ c.open }}" style="all:unset;cursor:pointer;flex:none;height:36px;line-height:36px;padding:0 14px;border-radius:999px;font-size:13.5px;font-weight:600;background:{{ c.bg }};color:{{ c.fg }};">{{ c.name }}</button>
+            </sc-for>
+          </div>
+          <div style="flex:1;overflow:auto;padding:4px 16px 32px;display:flex;flex-direction:column;gap:14px;">
+            <sc-for list="{{ items }}" as="p" hint-placeholder-count="3">
+              <div style="flex:none;border-radius:16px;border:1px solid #ececef;background:#fff;overflow:hidden;">
+                <div style="position:relative;width:100%;height:190px;">
+                  <div style="position:absolute;inset:0;border-radius:0px;overflow:hidden;background:repeating-linear-gradient(135deg,#efeff2 0 8px,#f7f7f9 8px 16px);"><div style="position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-image:url(images/{{ p.slotId }}.jpg),url(images/{{ p.slotId }}.png),url(images/{{ p.slotId }}.webp);"></div></div>
+                </div>
+                <div onClick="{{ p.open }}" role="button" style="cursor:pointer;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+                  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;">
+                    <div style="font-size:12px;color:#8a8a92;">{{ p.org }} · {{ p.tag }}</div>
+                    <div style="font-weight:600;font-size:16px;">{{ p.title }}</div>
+                    <div style="display:flex;align-items:baseline;gap:6px;margin-top:4px;"><span style="font:700 19px 'Bricolage Grotesque';">{{ p.metric }}</span><span style="font-size:12px;color:#6b6b73;">{{ p.metricLabel }}</span></div>
+                  </div>
+                  <div style="font-size:22px;color:#b5b5bb;">›</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hasProof }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;overflow:auto;padding:4px 16px 32px;">
+            <div style="position:relative;width:100%;height:220px;">
+              <div style="position:absolute;inset:0;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(135deg,#efeff2 0 8px,#f7f7f9 8px 16px);"><div style="position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-image:url(images/{{ proof.slotId }}.jpg),url(images/{{ proof.slotId }}.png),url(images/{{ proof.slotId }}.webp);"></div></div>
+            </div>
+            <div style="margin:20px 0 20px;">
+              <div style="font-size:12.5px;color:#8a8a92;">{{ proof.org }} · {{ proof.tag }}</div>
+              <h3 style="margin:6px 0 12px;font:700 28px/1.1 'Bricolage Grotesque';letter-spacing:-.02em;">{{ proof.title }}</h3>
+              <div style="display:flex;align-items:baseline;gap:8px;"><span style="font:800 32px/1 'Bricolage Grotesque';">{{ proof.metric }}</span><span style="font-size:13px;color:#6b6b73;">{{ proof.metricLabel }}</span></div>
+            </div>
+            <sc-if value="{{ proof.isBlog }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:18px;">
+                <p style="margin:0;font-size:17px;line-height:1.7;color:#2a2a30;text-wrap:pretty;">{{ proof.body }}</p>
+                <a href="{{ proof.url }}" target="_blank" style="align-self:flex-start;font-weight:600;font-size:14px;">Read the full post →</a>
+              </div>
+            </sc-if>
+            <sc-if value="{{ proof.isCase }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="background:#f6f6f8;border-radius:14px;padding:16px;"><div style="font-size:11px;letter-spacing:.14em;font-weight:600;color:#8a8a92;margin-bottom:6px;">THE PROBLEM</div><div style="font-size:15px;line-height:1.55;color:#2a2a30;">{{ proof.problem }}</div></div>
+                <div style="background:#f6f6f8;border-radius:14px;padding:16px;"><div style="font-size:11px;letter-spacing:.14em;font-weight:600;color:#8a8a92;margin-bottom:6px;">THE APPROACH</div><div style="font-size:15px;line-height:1.55;color:#2a2a30;">{{ proof.approach }}</div></div>
+                <div style="background:#fbf3d6;border-radius:14px;padding:16px;"><div style="font-size:11px;letter-spacing:.14em;font-weight:600;color:#9a7a14;margin-bottom:6px;">THE RESULT</div><div style="font-size:15px;line-height:1.55;color:#2a2a30;">{{ proof.result }}</div></div>
+              </div>
+            </sc-if>
+            <button onClick="{{ next }}" style="all:unset;cursor:pointer;display:block;box-sizing:border-box;width:100%;text-align:center;margin-top:20px;height:50px;line-height:50px;border-radius:999px;background:#4a9ff0;color:#fff;font-weight:600;font-size:15px;">Next →</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;showWidgets&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const IMG = 'https://chainika.in/images/';
+const P = {
+  gwd: { title: 'Grow Without Discounting', org: 'Reelo', tag: 'Flagship campaign · 2023', img: 'grow-without-discounting.jpg', ph: 'campaign creative', metric: 'Full year', metricLabel: 'campaign duration',
+    problem: "India's restaurant industry was addicted to discounts — training its best customers to only show up when it's cheap.",
+    approach: 'One uncomfortable argument, run as a year-long narrative across content, events and sales conversations.',
+    result: "Shaped Reelo's positioning statement, with strong industry validation." },
+  membership: { title: 'Membership Launch', org: 'Reelo', tag: 'Product GTM · 2024', img: 'membership-launch.jpg', ph: 'launch assets', metric: '300+', metricLabel: 'restaurants activated',
+    problem: 'A new Memberships add-on needed adoption — and a new way to talk about recurring loyalty.',
+    approach: 'End-to-end GTM across PR, a music video, education content and paid channels.',
+    result: '300+ restaurants on memberships and a new revenue conversation around recurring loyalty.' },
+  abm: { title: 'Enterprise ABM & City Mixers', org: 'Reelo', tag: 'ABM · Events', img: 'abm-city-mixer.jpg', ph: 'city mixer photo', metric: '100+', metricLabel: 'enterprise SQLs / year',
+    problem: "The top 300–400 restaurant groups don't respond to generic outreach.",
+    approach: 'City mixers in key cities, personalised outreach and operator-focused content.',
+    result: '100+ enterprise SQLs a year from a defined target list.' },
+  videos: { title: 'AI Use Case Videos', org: 'Reelo', tag: 'Content · 2024', img: 'use-case-videos.jpg', ph: 'video stills', metric: '↑ SQL', metricLabel: 'deal attribution',
+    problem: "Feature talk didn't land with owners running a busy floor.",
+    approach: 'Scenario-based stories in the language restaurant owners actually use, built with AI for speed and specificity.',
+    result: 'Became a major deal-influence asset for sales.' },
+  workshops: { title: 'Loyalty Workshops', org: 'Reelo', tag: 'Events · 2024', img: 'loyalty-workshop.jpg', ph: 'workshop photo', metric: '2', metricLabel: 'workshops run',
+    problem: 'Operators needed a trusted voice on loyalty, not another pitch.',
+    approach: 'In-person workshops on loyalty strategy. An authority play, not a sales pitch.',
+    result: 'Strong industry response and direct pipeline.' },
+  lumbai: { title: 'Lumbai Lab GTM', org: 'Reelo', tag: 'GTM · Ongoing', img: '', ph: 'positioning framework', metric: 'Active', metricLabel: 'launch in progress',
+    problem: 'A new product needs a clear place in the market before it ships.',
+    approach: 'Positioning, launch sequencing, channel strategy and a messaging framework.',
+    result: 'In progress.' },
+  seo: { title: 'SEO & Organic Growth', org: 'Kylas', tag: 'SEO · 2022–2023', img: 'seo-dashboard.jpg', ph: 'SEO dashboard', metric: 'DR 41', metricLabel: 'from zero',
+    problem: 'A young CRM brand with no organic presence.',
+    approach: 'In-house SEO: vertical landing pages, long-form content and technical foundations.',
+    result: 'Domain Rating 0 → 41, with 500 keywords ranked in the top 10.' },
+  ads: { title: 'Ad Creative System', org: 'Kylas', tag: 'Paid media', img: 'kylas-ads.jpg', ph: 'ad creatives', metric: '−50%', metricLabel: 'CAC',
+    problem: 'Paid spend needed to tie directly to conversion.',
+    approach: '"Unlimited Users" campaign, carousels and CRM ads across Google and Meta.',
+    result: 'CAC cut by 50% and lead qualification improved by 65%, backed by ICP definition.' },
+  awards: { title: 'Industry Awards', org: 'Kylas', tag: 'Brand', img: '', ph: 'G2 / GetApp badges', metric: '#5', metricLabel: 'highest rated CRM on G2',
+    problem: 'Trust is the hardest thing for a new SaaS brand to earn.',
+    approach: 'Review programmes and customer advocacy built into the lifecycle.',
+    result: '#5 Highest Rated CRM and #2 Easiest to Use on G2; #1 CRM Leader on GetApp.' },
+  partners: { title: 'Partnerships', org: 'Kylas', tag: 'Co-marketing', img: '', ph: 'partner logos', metric: '7', metricLabel: 'brand partners',
+    problem: 'Reaching SMBs at scale without buying every impression.',
+    approach: 'Co-marketing with platforms SMBs already trust.',
+    result: 'Visa, Tata Business Hub, Jio, MyOperator, Netcore Cloud, WATI and Interakt.' },
+  content: { title: 'Content & Webinars', org: 'Kylas', tag: 'Content', img: '', ph: 'eBook covers', metric: '10K', metricLabel: 'LinkedIn followers, organic',
+    problem: 'SMB owners needed education before they needed a CRM.',
+    approach: 'eBooks, whitepapers, vertical landing pages and webinar series on RevOps and MSME growth.',
+    result: '10K organic LinkedIn followers in two years at a 5% engagement rate.' },
+};
+const ACH = [
+  { metric: '2,500+', org: 'REELO', title: 'Sales Qualified Leads', desc: 'Built lead-to-SQL workflows that turned inbound into qualified pipeline.' },
+  { metric: '1,500', org: 'REELO', title: 'SQLs from a single event', desc: 'Aahar — powered by branding and ABM activations, including curated mixers.' },
+  { metric: '25%', org: 'REELO', title: 'CAC held to 25% of net ARR', desc: 'Kept acquisition cost tied to revenue, not to spend.' },
+  { metric: '−50%', org: 'KYLAS', title: 'CAC cut in half', desc: 'Plus 65% better lead qualification, through ICP definition and omni-channel campaigns.' },
+  { metric: '+50%', org: 'KYLAS', title: 'Funnel conversion with pre-sales', desc: 'QL → Demo Scheduled and Scheduled → Completed both up 50%; turnaround time cut 50%.' },
+  { metric: '44%', org: 'AEO', title: 'Share of voice in AI answers', desc: 'On brand keywords, ranking in the top 3 AI answers for 100+ prompts.' },
+  { metric: '0 → 43', org: 'SEO', title: 'Domain authority from zero, twice', desc: 'Reelo 0 → 43. Kylas 0 → 41, with 500 keywords ranked in the top 10.' },
+  { metric: '#1', org: 'KYLAS', title: 'CRM Leader on GetApp', desc: '5th Highest Rated CRM and 2nd Easiest to Use on G2, via review campaigns across Gartner portals.' },
+  { metric: '20K+', org: 'SOCIAL', title: 'Brand followers', desc: 'Plus 18K+ thought-leadership followers across leadership profiles. Kylas LinkedIn hit 10K organically in two years at 5% engagement.' },
+  { metric: '2', org: 'REELO', title: 'Product launches', desc: 'Reelo Memberships and the Reelo Mobile App, driving early adoption and prepaid revenue.' },
+  { metric: '6', org: 'PARTNERS', title: 'Brand partnerships & press', desc: 'Tata Business Hub, Jio, MyOperator, Netcore Cloud, WATI, Interakt. Coverage in YourStory and ET.' },
+  { metric: '14', org: 'TEAM', title: 'Marketing & pre-sales team led', desc: 'At Kylas. Built and mentored the team at Reelo.' },
+];
+const BLOG = (title, body) => ({ title, body, org: 'Blog', tag: 'Essay', img: '', ph: 'cover image', metric: '3 min', metricLabel: 'read', isBlog: true, url: 'https://www.linkedin.com/in/chainika-dhaila/recent-activity/all/' });
+Object.assign(P, {
+  b1: BLOG('Revenue Over Reach', 'Every channel gets evaluated by one question: does this move someone closer to buying, staying, or spending more?'),
+  b2: BLOG('Distribution First', 'Most marketers obsess over content and forget who will actually see it. If I can\'t answer "who will see this and why," I go back to the drawing board before writing a word.'),
+  b3: BLOG('Systems Beat Campaigns', 'A one-time launch is a spike. A system is a compounding asset. I think in lifecycle stages, where each touchpoint sets up the next.'),
+  b4: BLOG('Operator Empathy', 'Restaurant owners are running a floor. Sales managers have a quota. Operators don\'t buy "growth" — they buy a specific outcome they can visualise.'),
+  b5: BLOG('Clarity Is the Product', 'If someone reads your headline and doesn\'t immediately get what you do and why they should care, you\'ve lost them. Every line of copy should have a job.'),
+  b6: BLOG('Narrative as Positioning', '"Grow Without Discounting" wasn\'t a tagline — it was a market position. The best marketing doesn\'t describe your product; it changes how the market sees the problem.'),
+});
+const FOLDERS = [
+  { id: 'reelo', name: 'Reelo', items: ['gwd', 'membership', 'abm', 'videos', 'workshops', 'lumbai'] },
+  { id: 'kylas', name: 'Kylas', items: ['seo', 'ads', 'awards', 'partners', 'content'] },
+  { id: 'campaigns', name: 'Campaigns', items: ['gwd', 'ads', 'membership'] },
+  { id: 'gtm', name: 'GTM Launches', items: ['membership', 'lumbai', 'abm'] },
+  { id: 'content', name: 'Content & SEO', items: ['videos', 'seo', 'content', 'workshops'] },
+  { id: 'blogs', name: 'Blogs', items: ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'] },
+];
+const SKILLS = [['Brand & Narrative', 95], ['Product Marketing', 93], ['Email & WhatsApp', 92], ['Google Ads', 90], ['Meta Ads', 88], ['Events & IRL', 85], ['SEO & Organic', 80]];
+const MARQUEE = [
+  { src: 'G2', text: '#5 Highest Rated CRM', meta: 'Kylas Sales CRM' },
+  { src: 'G2', text: '#2 Easiest to Use', meta: 'Kylas Sales CRM' },
+  { src: 'GETAPP', text: '#1 CRM Leader', meta: 'Kylas Sales CRM' },
+  { src: 'VISA', text: 'Co-marketing partnership', meta: 'Partnership · Kylas' },
+  { src: 'TATA BUSINESS HUB', text: 'Co-marketing partnership', meta: 'Partnership · Kylas' },
+  { src: 'JIO', text: 'Co-marketing partnership', meta: 'Partnership · Kylas' },
+  { src: 'NETCORE CLOUD', text: 'Co-marketing partnership', meta: 'Partnership · Kylas' },
+  { src: 'WATI · INTERAKT · MYOPERATOR', text: 'WhatsApp & telephony partners', meta: 'Partnership · Kylas' },
+  { src: 'YOURSTORY', text: 'Press coverage', meta: 'Media' },
+  { src: 'ECONOMIC TIMES', text: 'Press coverage', meta: 'Media' },
+];
+
+const SP = {
+  brand: { kicker: 'SUPERPOWER Nº1', title: 'Narrative that becomes a market position.', body: 'India\'s restaurant industry was addicted to discounts. "Grow Without Discounting" argued that discounts train your best customers to only come when it\'s cheap — and it became Reelo\'s positioning statement.',
+    points: [{ t: 'Grow Without Discounting', d: 'full-year flagship campaign, shaped the positioning statement' }, { t: '300+ restaurants on memberships', d: 'GTM across PR, a music video, education content and paid' }, { t: '2 loyalty workshops', d: 'authority play for operators, not a sales pitch' }], btns: [['Reelo folder', 'reelo'], ['Campaigns', 'campaigns']] },
+  demand: { kicker: 'SUPERPOWER Nº2', title: 'Pipeline, not impressions.', body: 'Distribution is strategy. SMB funnels, enterprise ABM with city mixers across key cities, and AI-built use-case videos in the language operators actually use.',
+    points: [{ t: '1,500+ SMB SQLs a year', d: '50% lead → demo, 30% demo → close' }, { t: '100+ enterprise SQLs a year', d: 'from 300–400 targeted restaurant groups' }, { t: 'Use-case videos', d: 'a major deal-influence asset for sales' }], btns: [['GTM folder', 'gtm']] },
+  organic: { kicker: 'SUPERPOWER Nº3', title: 'A brand from near-zero to award-winning.', body: 'As VP Marketing at Kylas Sales CRM, I built the function in-house with a lean team — SEO, content, paid, lifecycle and partnerships.',
+    points: [{ t: '50% lower CAC', d: 'and 65% better lead qualification' }, { t: 'Domain rating 0 → 41', d: '500 keywords ranked in the top 10' }, { t: '7 brand partnerships', d: 'Visa, Tata Business Hub, Jio, WATI and more' }], btns: [['Kylas folder', 'kylas'], ['Content & SEO', 'content']] },
+};
+
+function SlotWord({ words }) {
+  const n = words.length, reel = [...words, words[0]];
+  const [pos, setPos] = React.useState(0);
+  const [anim, setAnim] = React.useState(true);
+  const [widths, setWidths] = React.useState([]);
+  const refs = React.useRef([]);
+  React.useLayoutEffect(() => {
+    const m = () => { const w = refs.current.map(r => r ? r.offsetWidth : 0); if (w.every(x => x > 0)) setWidths(w); };
+    m();
+    const ro = new ResizeObserver(m);
+    refs.current.forEach(r => r && ro.observe(r));
+    return () => ro.disconnect();
+  }, []);
+  React.useEffect(() => {
+    const t = setInterval(() => { setAnim(true); setPos(p => p + 1); }, 2400);
+    return () => clearInterval(t);
+  }, []);
+  React.useEffect(() => {
+    if (pos === n) { const t = setTimeout(() => { setAnim(false); setPos(0); }, 700); return () => clearTimeout(t); }
+  }, [pos]);
+  const ease = 'cubic-bezier(.3,1.45,.5,1)';
+  return React.createElement('span', { style: { display: 'inline-block', position: 'relative', height: '1.2em', lineHeight: '1.2em', verticalAlign: '-0.3em', overflow: 'hidden', width: widths[pos % n] ? widths[pos % n] + 'px' : 'auto', transition: anim ? `width .6s ${ease}` : 'none', textAlign: 'left' } },
+    React.createElement('span', { style: { display: 'flex', flexDirection: 'column', transform: `translateY(${-pos * 1.2}em)`, transition: anim ? `transform .65s ${ease}` : 'none' } },
+      reel.map((w, i) => React.createElement('span', { key: i, ref: el => { if (i < n) refs.current[i] = el; }, style: { display: 'block', whiteSpace: 'nowrap', width: 'max-content', height: '1.2em' } }, w))));
+}
+
+class Component extends DCLogic {
+  state = { now: new Date(), folder: null, proof: null };
+  componentDidMount() { this.t = setInterval(() => this.setState({ now: new Date() }), 1000); }
+  componentWillUnmount() { clearInterval(this.t); }
+  scrollTo(id) { const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 56, behavior: 'smooth' }); }
+  open(id) { this.setState({ folder: id, proof: null }); }
+
+  renderVals() {
+    const ist = new Date(this.state.now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    const h = ist.getHours() % 12, m = ist.getMinutes(), s = ist.getSeconds();
+    const y = ist.getFullYear(), mo = ist.getMonth(), d = ist.getDate();
+    const first = new Date(y, mo, 1).getDay(), days = new Date(y, mo + 1, 0).getDate();
+    const cal = [];
+    for (let i = 0; i < first; i++) cal.push({ n: '', bg: 'transparent', fg: '#6b6b73', fw: 400 });
+    for (let i = 1; i <= days; i++) cal.push({ n: i, bg: i === d ? '#131316' : 'transparent', fg: i === d ? '#fff' : '#6b6b73', fw: i === d ? 700 : 400 });
+    const wd = ist.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+
+    const { folder, proof } = this.state;
+    const f = FOLDERS.find(x => x.id === folder);
+    const items = f ? f.items.map(k => ({ ...P[k], img: P[k].img ? IMG + P[k].img : '', slotId: 'proof-' + k, slotPh: '＋ Add ' + P[k].ph, open: () => this.setState({ proof: k }) })) : [];
+    const pr = proof ? { ...P[proof], isBlog: !!P[proof].isBlog, isCase: !P[proof].isBlog, img: P[proof].img ? IMG + P[proof].img : '', slotId: 'proof-' + proof, slotPh: '＋ Add ' + P[proof].ph } : {};
+
+    return {
+      showWidgets: this.props.showWidgets ?? true,
+      ticks: Array.from({ length: 12 }, (_, i) => ({ h: i % 3 === 0 ? '8px' : '4px', tf: `translate(-50%,-50%) rotate(${i * 30}deg) translateY(-62px)` })),
+      hourRot: `rotate(${(h + m / 60) * 30}deg)`, minRot: `rotate(${(m + s / 60) * 6}deg)`, secRot: `rotate(${s * 6}deg)`,
+      weekday: wd, weekdayShort: wd.slice(0, 3), dayNum: d, dow: ['S', 'M', 'T', 'W', 'T', 'F', 'S'], cal,
+      roleSlot: React.createElement(SlotWord, { words: ['brand', 'growth', 'marketing'] }),
+      spList: ['brand', 'demand', 'organic'].map((k, i) => ({ ...SP[k], label: k.toUpperCase(), top: (52 + i * 50) + 'px', minH: `calc(100vh - ${52 + i * 50}px)`, btnList: SP[k].btns.map(([label, id]) => ({ label, open: () => this.open(id) })) })),
+      istTime: ist.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
+      navChips: FOLDERS.map(x => ({ name: x.name, open: () => this.open(x.id), bg: x.id === folder ? '#131316' : '#f1f1f4', fg: x.id === folder ? '#fff' : '#3a3a40' })),
+      achievements: ACH,
+      skills: SKILLS.map(([name, v]) => ({ name, v, w: v + '%' })),
+      marquee: [...MARQUEE, ...MARQUEE],
+      folders: FOLDERS.map(x => ({ name: x.name, count: x.items.length, countLabel: x.items.length + (x.id === 'blogs' ? ' posts' : ' proofs'), open: () => this.open(x.id), navBg: x.id === folder ? 'rgba(74,159,240,.16)' : 'transparent', navFw: x.id === folder ? 600 : 400 })),
+      openReelo: () => this.open('reelo'), openKylas: () => this.open('kylas'), openCampaigns: () => this.open('campaigns'), openGtm: () => this.open('gtm'), openContent: () => this.open('content'),
+      goTop: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+      goFolders: () => this.scrollTo('m-folders'), goSuper: () => this.scrollTo('m-super'), goAchievements: () => this.scrollTo('m-achievements'), goContact: () => this.scrollTo('m-contact'),
+      isOpen: !!f, hasProof: !!proof, showGrid: !!f && !proof, items, proof: pr,
+      crumb: f ? (proof ? `${f.name} / ${P[proof].title}` : f.name) : '',
+      folderMeta: f ? `${f.items.length} ${f.id === 'blogs' ? 'posts' : 'proofs'}` : '',
+      close: () => this.setState({ folder: null, proof: null }),
+      stop: e => e.stopPropagation(),
+      back: () => this.setState({ proof: null }),
+      next: () => { const arr = f.items; this.setState({ proof: arr[(arr.indexOf(proof) + 1) % arr.length] }); },
+    };
+  }
+}
+</script>
+</body>
+</html>
